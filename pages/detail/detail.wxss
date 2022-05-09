@@ -1,0 +1,11 @@
+/* pages/detail/detail.wxss */
+page {
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.btn {
+  border-radius: 40rpx;
+  width: 80%;
+  letter-spacing: 20rpx;
+}
