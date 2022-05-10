@@ -3,6 +3,7 @@ import CryptoJS from 'crypto-js'
 import CusBase64 from '../../utils/Base64'
 
 const audio = wx.createInnerAudioContext()
+
 Page({
 
   /**
@@ -19,23 +20,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // const that = this
-    // wx.getLocalIPAddress({
-    //   success(res) {
-    //     that.setData({
-    //       host: res.localip
-    //     })
-    //   }
-    // })
-    audio.src = './hitoy.mp3'
+    const that = this
+    wx.getLocalIPAddress({
+      success(res) {
+        that.setData({
+          host: res.localip
+        })
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -67,6 +65,7 @@ Page({
    */
   onShareAppMessage: function () {},
   test() {
+    const that = this
     console.log('点击测试');
     this.getWebsocketUrl().then(url => {
       console.log('开始连接', url);
@@ -95,11 +94,29 @@ Page({
       wx.onSocketMessage((result) => {
         console.log("服务器的数据返回", result);
         const data = JSON.parse(result.data)
-        console.log(97, data.data.audio);
-        audio.src = data.data.audio
-        // this.setData({
-        //   src: data.data.audio
-        // })
+        const target = `${wx.env.USER_DATA_PATH}/${new Date().getTime()}.mp3`
+        try {
+          const fs = wx.getFileSystemManager()
+          // fs.writeFile({
+          //   filePath: target,
+          //   data: data.audio,
+          //   encoding: 'base64',
+          //   success: (res) => {
+          //     console.log('成功', res)
+          //   },
+          //   fail: (err) => {
+          //     console.error('失败115', err)
+          //   }
+          // })
+          const res = fs.writeFileSync(
+            target,
+            data.audio,
+            'base64'
+          )
+          console.log(116, res)
+        } catch (e) {
+          console.log('失败', e)
+        }
       })
       // 发送数据
       const send = () => {
@@ -120,7 +137,7 @@ Page({
           },
           data: {
             status: 2,
-            text: CusBase64.encoder('123')
+            text: CusBase64.encoder('你好世界！')
           }
         }
         const json = JSON.stringify(params)
@@ -151,20 +168,22 @@ Page({
       const authorizationOrigin = `api_key="${apiKey}", algorithm="${algorithm}", headers="${headers}", signature="${signature}"`
       const authorization = CusBase64.encoder(authorizationOrigin)
       url += `?authorization=${authorization}&date=${date}&host=${host}`
-      callback(url)
+      callback(url.replace(/ /g, '%20'))
     })
   },
-  start() {
-    console.log('点击播放')
-    audio.onPlay(() => {
-      console.log('开始播放160')
-    })
-    audio.onError(e => {
-      console.log('错误', e);
-    })
-    audio.onCanplay(() => {
-      console.log('开始播放166');
-      audio.play()
-    })
-  }
+  // start() {
+  //   console.log('点击播放')
+  //   audio.src = 'https://sharefs.ali.kugou.com/202202121104/0639f9c2315cbb939aff741be27860ff/KGTX/CLTX001/02c4d6fefd5d899081ba45f47be48adb.mp3'
+  //   audio.onPlay(() => {
+  //     console.log('开始播放160')
+  //   })
+  //   audio.onError(e => {
+  //     console.log('错误', e);
+  //   })
+  //   audio.onCanplay(() => {
+  //     console.log('开始播放166');
+  //     audio.play()
+  //   })
+  //   // audio.play()
+  // }
 })
