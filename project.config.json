@@ -4,36 +4,42 @@
     "ignore": []
   },
   "setting": {
-    "bundle": false,
-    "userConfirmedBundleSwitch": false,
-    "urlCheck": true,
-    "scopeDataCheck": false,
-    "coverView": true,
+    "urlCheck": false,
     "es6": true,
+    "enhance": true,
     "postcss": true,
-    "compileHotReLoad": false,
-    "lazyloadPlaceholderEnable": false,
     "preloadBackgroundData": false,
     "minified": true,
-    "autoAudits": false,
     "newFeature": false,
-    "uglifyFileName": false,
-    "uploadWithSourceMap": true,
-    "useIsolateContext": true,
+    "coverView": true,
     "nodeModules": false,
-    "enhance": true,
-    "useMultiFrameRuntime": false,
-    "useApiHook": false,
-    "useApiHostProcess": false,
+    "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
-    "packNpmManually": false,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
     "enableEngineNative": false,
+    "useIsolateContext": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "showES6CompileOption": false
   },
   "compileType": "miniprogram",
-  "appid": "touristappid",
+  "appid": "wx3851701dcfe306ec",
   "projectname": "%E8%AE%AF%E9%A3%9E%E8%AF%AD%E9%9F%B3%E6%B5%8B%E8%AF%95%E5%B0%8F%E7%A8%8B%E5%BA%8F",
   "debugOptions": {
     "hidedInDevtools": []
@@ -44,6 +50,7 @@
     "servePath": ""
   },
   "isGameTourist": false,
+  "libVersion": "2.24.1",
   "condition": {
     "search": {
       "list": []

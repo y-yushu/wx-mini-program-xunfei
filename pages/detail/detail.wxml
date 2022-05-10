@@ -1,2 +1,5 @@
 <!--pages/detail/detail.wxml-->
 <button class="btn" bindtap="test">点击按钮</button>
+<text>{{ host }}</text>
+
+<button class="btn" bindtap="start">点击播放</button>
