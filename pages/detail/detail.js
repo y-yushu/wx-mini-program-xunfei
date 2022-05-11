@@ -20,13 +20,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const that = this
-    wx.getLocalIPAddress({
-      success(res) {
-        that.setData({
-          host: res.localip
-        })
-      }
+    // const that = this
+    // wx.getLocalIPAddress({
+    //   success(res) {
+    //     that.setData({
+    //       host: res.localip
+    //     })
+    //   }
+    // })
+    audio.onPlay(e => {
+      console.log('正常', e);
+    })
+    audio.onCanplay(e => {
+      console.log('可播放', e);
+    })
+    audio.onError(e => {
+      console.log('异常', e);
     })
   },
 
@@ -65,7 +74,6 @@ Page({
    */
   onShareAppMessage: function () {},
   test() {
-    const that = this
     console.log('点击测试');
     this.getWebsocketUrl().then(url => {
       console.log('开始连接', url);
@@ -92,28 +100,23 @@ Page({
       })
       // 监听服务器的数据返回
       wx.onSocketMessage((result) => {
-        console.log("服务器的数据返回", result);
         const data = JSON.parse(result.data)
         const target = `${wx.env.USER_DATA_PATH}/${new Date().getTime()}.mp3`
         try {
           const fs = wx.getFileSystemManager()
-          // fs.writeFile({
-          //   filePath: target,
-          //   data: data.audio,
-          //   encoding: 'base64',
-          //   success: (res) => {
-          //     console.log('成功', res)
-          //   },
-          //   fail: (err) => {
-          //     console.error('失败115', err)
-          //   }
-          // })
-          const res = fs.writeFileSync(
-            target,
-            data.audio,
-            'base64'
-          )
-          console.log(116, res)
+          fs.writeFile({
+            filePath: target,
+            data: data.data.audio,
+            encoding: 'base64',
+            success: (res) => {
+              audio.src = target
+              audio.play()
+              console.log('成功', res)
+            },
+            fail: (err) => {
+              console.error('失败115', err)
+            }
+          })
         } catch (e) {
           console.log('失败', e)
         }
@@ -137,7 +140,7 @@ Page({
           },
           data: {
             status: 2,
-            text: CusBase64.encoder('你好世界！')
+            text: CusBase64.encoder('你好世界啊！')
           }
         }
         const json = JSON.stringify(params)
@@ -171,19 +174,4 @@ Page({
       callback(url.replace(/ /g, '%20'))
     })
   },
-  // start() {
-  //   console.log('点击播放')
-  //   audio.src = 'https://sharefs.ali.kugou.com/202202121104/0639f9c2315cbb939aff741be27860ff/KGTX/CLTX001/02c4d6fefd5d899081ba45f47be48adb.mp3'
-  //   audio.onPlay(() => {
-  //     console.log('开始播放160')
-  //   })
-  //   audio.onError(e => {
-  //     console.log('错误', e);
-  //   })
-  //   audio.onCanplay(() => {
-  //     console.log('开始播放166');
-  //     audio.play()
-  //   })
-  //   // audio.play()
-  // }
 })

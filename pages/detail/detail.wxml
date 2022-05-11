@@ -1,5 +1,3 @@
 <!--pages/detail/detail.wxml-->
 <button class="btn" bindtap="test">点击按钮</button>
 <text>{{ host }}</text>
-
-<audio src="" id="mmmm"></audio>
